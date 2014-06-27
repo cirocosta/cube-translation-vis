@@ -1,0 +1,28 @@
+{
+  "name": "cube-translation-vis",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cirocosta/cube-translation-vis.git"
+  },
+  "author": "Ciro S. Costa <ciro9758@gmail.com> (http://www.cirocosta.com.br/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cirocosta/cube-translation-vis/issues"
+  },
+  "homepage": "https://github.com/cirocosta/cube-translation-vis",
+  "devDependencies": {
+    "gulp": "^3.8.3",
+    "gulp-livereload": "^2.1.0",
+    "http-server": "^0.6.1"
+  }
+}
