@@ -1,8 +1,8 @@
 angular.module('cube-trans-vis', [])
-  .directive('cubeTransvis', [function () {
+  .directive('cubeTransvis', ['$parse', function ($parse) {
     'use strict';
 
-    function startVisualization (elem, attrs) {
+    function startVisualization (elem, attrs, scope, invoker) {
 
       ////////////////////////////////////
       // definition of global variables //
@@ -72,8 +72,8 @@ angular.module('cube-trans-vis', [])
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setClearColor(colors.lightGrey, 1);
 
-        canvasWidth = window.innerWidth;
-        canvasHeight = window.innerHeight;
+        canvasWidth = attrs.width || 200;
+        canvasHeight = canvasWidth;
 
         renderer.setSize(canvasWidth, canvasHeight);
 
@@ -142,8 +142,6 @@ angular.module('cube-trans-vis', [])
 
         document.addEventListener("keydown", onDocumentKeyDown, false);
         document.addEventListener("keydown", debounce(function (e) {
-          var position = { x : 0, y: 300 };
-          var target = { x : 400, y: 50 };
           tween = new TWEEN.Tween(positions.cube).to({x:0.0, y:0.0, z:0.0}, 50);
           tween.easing(TWEEN.Easing.Quadratic.InOut);
           tween.start();
@@ -160,26 +158,32 @@ angular.module('cube-trans-vis', [])
         switch (keyCode) {
           case 87: // W
           positions.cube.y += 1;
+          invoker(scope, {dir: '+y'});
           break;
 
           case 83: // S
           positions.cube.y -= 1;
+          invoker(scope, {dir: '-y'});
           break;
 
           case 68: // D
           positions.cube.x += 1;
+          invoker(scope, {dir: '+x'});
           break;
 
           case 65: // A
           positions.cube.x -= 1;
+          invoker(scope, {dir: '-x'});
           break;
 
           case 69: // E
           positions.cube.z += 1;
+          invoker(scope, {dir: '+z'});
           break;
 
           case 81: // Q
           positions.cube.z -= 1;
+          invoker(scope, {dir: '-z'});
           break;
         }
       }
@@ -227,14 +231,14 @@ angular.module('cube-trans-vis', [])
         return new THREE.Mesh(cubeGeometry, cubeMaterial);
       }
 
-      window.addEventListener('resize', onWindowResize, false);
+      // window.addEventListener('resize', onWindowResize, false);
 
-      function onWindowResize(){
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+      // function onWindowResize(){
+      //   camera.aspect = window.innerWidth / window.innerHeight;
+      //   camera.updateProjectionMatrix();
 
-        renderer.setSize( window.innerWidth, window.innerHeight );
-      }
+      //   renderer.setSize( window.innerWidth, window.innerHeight );
+      // }
 
 
       function createLine (size, color, axis) {
@@ -276,7 +280,10 @@ angular.module('cube-trans-vis', [])
     return {
       restrict: 'E',
       link: function ($scope, $elem, $attrs) {
-        startVisualization($elem, $attrs);
+        var invoker = $parse($attrs.handler);
+
+        startVisualization($elem, $attrs, $scope, invoker);
+
       }
     };
   }]);
