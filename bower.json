@@ -1,6 +1,6 @@
 {
   "name": "cube-translation-vis",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/cirocosta/cube-translation-vis",
   "authors": [
     "Ciro S. Costa <ciro.costa@usp.br>"
@@ -13,7 +13,7 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
+  "dependencies": {
     "three.js": "*",
     "tween.js": "https://github.com/sole/tween.js.git"
   }
