@@ -69,6 +69,11 @@ angular.module('cube-trans-vis', [])
 
 
       function initializeScene () {
+        var deb = +attrs.debounce;
+
+        if (isNaN(deb))
+          deb = 500;
+
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setClearColor(colors.lightGrey, 1);
 
@@ -149,7 +154,7 @@ angular.module('cube-trans-vis', [])
           positions.cube.x = 0.0;
           positions.cube.y = 0.0;
           positions.cube.z = 0.0;
-        }, 500), false);
+        }, deb), false);
       }
 
       function onDocumentKeyDown (event) {
